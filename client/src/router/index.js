@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
+import Detail from '../views/Detail.vue'
 
 
 
@@ -14,11 +14,6 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/register',
-      name: 'register',
-      component: Register
-    },
-    {
       path: '/login',
       name: 'login',
       // route level code-splitting
@@ -27,11 +22,11 @@ const router = createRouter({
       // component: () => import('../views/AboutView.vue')
       component: Login
     },
-    // {
-    //   path: '/detail/:id',
-    //   name: 'detail',
-    //   component: Detail
-    // },
+    {
+      path: '/detail/:id',
+      name: 'detail',
+      component: Detail
+    },
     // {
     //   path: '/favorite',
     //   name: 'favorite',
@@ -41,12 +36,9 @@ const router = createRouter({
 })
 // router.beforeEach((to, from, next) => {
 //   if (
-//     (localStorage.access_token && to.name === "login") ||
-//     (localStorage.access_token && to.name === "register")
+//     (localStorage.access_token && to.name === "login")
 //   ) {
 //     next({ name: "home" });
-//   } else if (!localStorage.access_token && to.name === "bookmark") {
-//     next({ name: "login" });
 //   } else {
 //     next();
 //   }

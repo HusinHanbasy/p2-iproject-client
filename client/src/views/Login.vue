@@ -14,7 +14,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useCounterStore, ['register', 'login']),
+        ...mapActions(useCounterStore, ['register', 'login', 'googleLogin']),
         buttonReg() {
             const input = {
                 username: this.username,
@@ -30,68 +30,71 @@ export default {
                 password: this.passwordLog
             }
             this.login(input)
-        }
+        },
     }
 
 }
 </script>
 <template>
+    <div style="padding-top: 4%;" id="shell">
+        <div style="display:flex" class="section">
+            <div class="container">
+                <div class="row full-height justify-content-center">
+                    <div class="col-12 text-center align-self-center py-5">
+                        <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                            <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+                            <label for="reg-log">login</label>
+                            <div class="card-3d-wrap mx-auto">
+                                <div class="card-3d-wrapper">
+                                    <div class="card-front">
+                                        <div class="center-wrap">
+                                            <div class="section text-center">
+                                                <h4 class="mb-4 pb-3">Log In</h4>
+                                                <div class="form-group">
+                                                    <input v-model="emailLog" type="email" name="logemail"
+                                                        class="form-style" placeholder="Your Email" id="logemail"
+                                                        autocomplete="off">
+                                                    <i class="input-icon uil uil-at"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input v-model="passwordLog" type="password" name="logpass"
+                                                        class="form-style" placeholder="Your Password" id="logpass"
+                                                        autocomplete="off">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <div style="display: flex; padding-top: 5%;">
+                                                    <a href="#" class="btn mt-4" @click.prevent="buttonLog">Login</a>
 
-    <a href="https://front.codes/" class="logo" target="_blank">
-        <img src="https://assets.codepen.io/1462889/fcy.png" alt="">
-    </a>
+                                                    <GoogleLogin class="btn mt-4" :callback="googleLogin" />
+                                                </div>
 
-    <div class="section">
-        <div class="container">
-            <div class="row full-height justify-content-center">
-                <div class="col-12 text-center align-self-center py-5">
-                    <div class="section pb-5 pt-5 pt-sm-2 text-center">
-                        <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
-                        <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
-                        <label for="reg-log"></label>
-                        <div class="card-3d-wrap mx-auto">
-                            <div class="card-3d-wrapper">
-                                <div class="card-front">
-                                    <div class="center-wrap">
-                                        <div class="section text-center">
-                                            <h4 class="mb-4 pb-3">Log In</h4>
-                                            <div class="form-group">
-                                                <input v-model="emailLog" type="email" name="logemail"
-                                                    class="form-style" placeholder="Your Email" id="logemail"
-                                                    autocomplete="off">
-                                                <i class="input-icon uil uil-at"></i>
                                             </div>
-                                            <div class="form-group mt-2">
-                                                <input v-model="passwordLog" type="password" name="logpass"
-                                                    class="form-style" placeholder="Your Password" id="logpass"
-                                                    autocomplete="off">
-                                                <i class="input-icon uil uil-lock-alt"></i>
-                                            </div>
-                                            <a href="#" class="btn mt-4" @click.prevent="buttonLog">Login</a>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-back">
-                                    <div class="center-wrap">
-                                        <div class="section text-center">
-                                            <h4 class="mb-4 pb-3">Sign Up</h4>
-                                            <div class="form-group">
-                                                <input v-model="username" type="text" name="logname" class="form-style"
-                                                    placeholder="Your Full Name" id="logname" autocomplete="off">
-                                                <i class="input-icon uil uil-user"></i>
+                                    <div class="card-back">
+                                        <div class="center-wrap">
+                                            <div class="section text-center">
+                                                <h4 class="mb-4 pb-3">Sign Up</h4>
+                                                <div class="form-group">
+                                                    <input v-model="username" type="text" name="logname"
+                                                        class="form-style" placeholder="Your Full Name" id="logname"
+                                                        autocomplete="off">
+                                                    <i class="input-icon uil uil-user"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input v-model="email" type="email" name="logemail"
+                                                        class="form-style" placeholder="Your Email" id="logemail"
+                                                        autocomplete="off">
+                                                    <i class="input-icon uil uil-at"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input v-model="password" type="password" name="logpass"
+                                                        class="form-style" placeholder="Your Password" id="logpass"
+                                                        autocomplete="off">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <a href="#" class="btn mt-4" @click.prevent="buttonReg">Submit</a>
                                             </div>
-                                            <div class="form-group mt-2">
-                                                <input v-model="email" type="email" name="logemail" class="form-style"
-                                                    placeholder="Your Email" id="logemail" autocomplete="off">
-                                                <i class="input-icon uil uil-at"></i>
-                                            </div>
-                                            <div class="form-group mt-2">
-                                                <input v-model="password" type="password" name="logpass"
-                                                    class="form-style" placeholder="Your Password" id="logpass"
-                                                    autocomplete="off">
-                                                <i class="input-icon uil uil-lock-alt"></i>
-                                            </div>
-                                            <a href="#" class="btn mt-4" @click.prevent="buttonReg">Submit</a>
                                         </div>
                                     </div>
                                 </div>
@@ -100,7 +103,12 @@ export default {
                     </div>
                 </div>
             </div>
+            <div>
+                <img width="560" height="400" style="padding-top: 15%;"
+                    src="https://s4.bukalapak.com/img/4874755442/large/Untitled_1.jpg" alt="">
+            </div>
         </div>
+
     </div>
 </template>
 <style>
