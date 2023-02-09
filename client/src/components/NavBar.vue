@@ -43,12 +43,12 @@ export default {
         },
         buttonAll() {
             const data = {
-                search: this.search,
+                search: '',
                 page: this.page,
-                genre: this.genre,
+                genre: '',
                 limit: this.limit
             }
-            this.getMovie(data)
+            this.getMovies(data)
         }
     }
 }

@@ -34,13 +34,13 @@ const router = createRouter({
     // },
   ]
 })
-// router.beforeEach((to, from, next) => {
-//   if (
-//     (localStorage.access_token && to.name === "login")
-//   ) {
-//     next({ name: "home" });
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  if (
+    (localStorage.access_token && to.name === "login")
+  ) {
+    next({ name: "home" });
+  } else {
+    next();
+  }
+});
 export default router

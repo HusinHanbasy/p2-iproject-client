@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 const baseUrl = "http://localhost:3000"
+// const baseUrl = "https://baraaazir-production.up.railway.app"
 
 export const useCounterStore = defineStore('counter', {
   state: () => ({
@@ -139,7 +140,7 @@ export const useCounterStore = defineStore('counter', {
         url: `${baseUrl}/movies`,
         params: params,
         headers: {
-          'X-RapidAPI-Key': '2e49e0f5b0msh29f18cffd1cf153p1e2596jsnb0ce53987731',
+          'X-RapidAPI-Key': 'fdfe930c64msh13a9fac771a121dp1277cajsn17e5d9e11748',
           'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
         }
       })
@@ -158,7 +159,7 @@ export const useCounterStore = defineStore('counter', {
         method: 'GET',
         url: `${baseUrl}/movie/${id}`,
         headers: {
-          'X-RapidAPI-Key': '2e49e0f5b0msh29f18cffd1cf153p1e2596jsnb0ce53987731',
+          'X-RapidAPI-Key': 'fdfe930c64msh13a9fac771a121dp1277cajsn17e5d9e11748',
           'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
         }
       })
