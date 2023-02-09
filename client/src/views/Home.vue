@@ -1,19 +1,42 @@
 <script>
+import { ref } from "vue";
 import { mapState, mapActions } from 'pinia';
 import { useCounterStore } from '../stores/counter'
 import Card from '../components/Card.vue'
 export default {
+  data() {
+    return {
+      search: '',
+      page: '1',
+      genre: '',
+      limit: 20,
+    }
+  },
   components: {
     Card
   },
   computed: {
-    ...mapState(useCounterStore, ["movies"])
+    ...mapState(useCounterStore, ["movies", 'totalMovies', 'totalPage'])
   },
   methods: {
-    ...mapActions(useCounterStore, ["getMovies"])
+    ...mapActions(useCounterStore, ["getMovies"]),
+    onClickHandler() {
+      const data = {
+        limit: this.limit,
+        page: this.page,
+        search: this.search,
+        genre: this.genre
+      }
+      this.getMovies(data)
+    },
+
   },
   created() {
-    this.getMovies()
+    const data = {
+      search: this.search,
+      genre: this.genre
+    }
+    this.getMovies(data)
   }
 
 }
@@ -26,6 +49,11 @@ export default {
         <div class="box">
           <Card v-for="movie in movies" :key="movie.id" :movie="movie" />
           <div class="cl">&nbsp;</div>
+          <div>
+            <vue-awesome-paginate :total-items="100" v-model="page" :items-per-page="limit" :max-pages-shown="100"
+              paginate-buttons-class="btn" active-page-class="btn-active" back-button-class="back-btn"
+              next-button-class="next-btn" :on-click="onClickHandler" />
+          </div>
         </div>
       </div>
       <div id="news">
@@ -88,3 +116,25 @@ export default {
   </div>
 
 </template>
+<style>
+.btn {
+  height: 40px;
+  width: 40px;
+  border: none;
+  margin-inline: 5px;
+  cursor: pointer;
+}
+
+.back-btn {
+  background-color: red;
+}
+
+.next-btn {
+  background-color: red;
+}
+
+.btn-active {
+  background-color: blue;
+  color: white;
+}
+</style>

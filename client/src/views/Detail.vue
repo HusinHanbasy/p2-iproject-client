@@ -1,6 +1,8 @@
 <script>
 import { mapActions, mapWritableState } from 'pinia';
 import { useCounterStore } from '../stores/counter';
+import Swal from 'sweetalert2'
+
 export default {
     computed: {
         ...mapWritableState(useCounterStore, ["movie", "transactionToken", "orderNumber"])
@@ -15,6 +17,13 @@ export default {
                     /* You may add your own implementation here */
                     console.log(result);
                     callback(result.order_id)
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'thank you',
+                        showConfirmButton: false,
+                        timer: 2500
+                    })
                     // alert("payment success!"); console.log(result);
                 },
                 onPending: function (result) {
@@ -69,8 +78,8 @@ export default {
             <h1>
                 DESCRIPTION : {{ movie.description }}
             </h1>
-            <button v-if="!orderNumber" @click.prevent="buttonBuy(movie.id)" class="btn btn primary">
-                BUY
+            <button style="width:30%" v-if="!orderNumber" @click.prevent="buttonBuy(movie.id)" class="btn btn primary">
+                BUY TICKET
             </button>
             <h1 v-if="orderNumber" style="color:red">
                 TOKEN : {{ orderNumber }}

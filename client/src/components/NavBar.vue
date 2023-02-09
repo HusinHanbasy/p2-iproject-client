@@ -5,20 +5,50 @@ import { useCounterStore } from '../stores/counter';
 export default {
     data() {
         return {
-            genre: ''
+            search: '',
+            page: '1',
+            genre: '',
+            limit: 20,
         }
-    }
-    ,
+    },
+
     computed: {
         ...mapState(useCounterStore, ["isLogin"])
     },
     methods: {
-        ...mapActions(useCounterStore, ['logout']),
+        ...mapActions(useCounterStore, ['logout', 'getMovies']),
         buttonLogin() {
             this.$router.push('/login')
         },
         buttonLogout() {
             this.logout()
+        },
+        filterGenre() {
+            const data = {
+                search: this.search,
+                page: this.page,
+                genre: this.genre,
+                limit: this.limit
+            }
+            this.getMovies(data)
+        },
+        buttonSearch() {
+            const data = {
+                search: this.search,
+                page: this.page,
+                genre: this.genre,
+                limit: this.limit
+            }
+            this.getMovies(data)
+        },
+        buttonAll() {
+            const data = {
+                search: this.search,
+                page: this.page,
+                genre: this.genre,
+                limit: this.limit
+            }
+            this.getMovie(data)
         }
     }
 }
@@ -47,41 +77,43 @@ export default {
                     <li v-if="isLogin"><a @click.prevent="buttonLogout" href="#">LOGOUT</a></li>
                 </ul>
             </div>
-            <div v-if="$route.name !== 'login'" id="sub-navigation">
+            <div id="sub-navigation">
                 <ul>
-                    <li><a href="#">SHOW ALL</a></li>
+                    <li><a @click.prevent="buttonAll" href="#">SHOW ALL</a></li>
                     <li><a href="#">LATEST TRAILERS</a></li>
                     <li><a href="#">TOP RATED</a></li>
-                    <Select style="background-color: black; color: white; padding-top:1%; text-align: center;">
-                        <option value="" disabled selected>GENRE</option>
-                        <option value="action">ACTION</option>
-                        <option value="adventure">ADVENTURE</option>
-                        <option value="animation">ANIMATION</option>
-                        <option value="biography">BIOGRAPHY</option>
-                        <option value="comedy">COMEDY</option>
-                        <option value="crime">CRIME</option>
-                        <option value="drama">DRAMA</option>
-                        <option value="family">FAMILY</option>
-                        <option value="fantasy">FANTASY</option>
-                        <option value="film-noir">FILM-NOIR</option>
-                        <option value="history">HISTORY</option>
-                        <option value="horror">HORROR</option>
-                        <option value="music">MUSIC</option>
-                        <option value="musical">MUSICAL</option>
-                        <option value="mystery">MYSTERY</option>
-                        <option value="romance">ROMANCE</option>
-                        <option value="ski-fi">SKI-FI</option>
-                        <option value="thriller">THRILLER</option>
-                        <option value="war">WAR</option>
-                        <option value="western">WESTERN</option>
-                    </Select>
+                    <li>
+                        <select @click.prevent="filterGenre" v-model="genre"
+                            style="background-color: black; color: white; padding-top:1%; text-align: center;">
+                            <option value=''>GENRE</option>
+                            <option value="Action">ACTION</option>
+                            <option value="Adventure">ADVENTURE</option>
+                            <option value="Animation">ANIMATION</option>
+                            <option value="Biography">BIOGRAPHY</option>
+                            <option value="Comedy">COMEDY</option>
+                            <option value="Crime">CRIME</option>
+                            <option value="Drama">DRAMA</option>
+                            <option value="Family">FAMILY</option>
+                            <option value="Fantasy">FANTASY</option>
+                            <option value="Film-noir">FILM-NOIR</option>
+                            <option value="History">HISTORY</option>
+                            <option value="Horror">HORROR</option>
+                            <option value="Music">MUSIC</option>
+                            <option value="Musical">MUSICAL</option>
+                            <option value="Mystery">MYSTERY</option>
+                            <option value="Romance">ROMANCE</option>
+                            <option value="Ski-fi">SKI-FI</option>
+                            <option value="Thriller">THRILLER</option>
+                            <option value="War">WAR</option>
+                            <option value="Western">WESTERN</option>
+                        </select>
+                    </li>
                 </ul>
                 <div id="search">
-                    <form action="#" method="get" accept-charset="utf-8">
+                    <form accept-charset="utf-8">
                         <label for="search-field">SEARCH</label>
-                        <input type="text" name="search field" value="Enter search here" id="search-field"
-                            class="blink search-field" />
-                        <input type="submit" value="GO!" class="search-button" />
+                        <input v-model="search" type="text" name="search field" class="blink search-field" />
+                        <input @click.prevent="buttonSearch" type="submit" value="GO!" class="search-button" />
                     </form>
                 </div>
             </div>
